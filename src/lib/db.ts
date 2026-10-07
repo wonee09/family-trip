@@ -1,4 +1,5 @@
 import { Pool, type QueryResultRow } from "pg";
+import { pgConfig } from "./pgconfig";
 import { SCHEMA_SQL } from "./schema";
 import { SEED_DAYS } from "./seed";
 
@@ -6,11 +7,7 @@ const globalForPg = globalThis as unknown as { pgPool?: Pool };
 
 export const pool =
   globalForPg.pgPool ??
-  new Pool({
-    connectionString: process.env.DATABASE_URL,
-    max: 5,
-    ssl: process.env.DATABASE_URL?.includes("sslmode=require") ? { rejectUnauthorized: false } : undefined,
-  });
+  new Pool({ ...pgConfig(), max: 5 });
 
 if (process.env.NODE_ENV !== "production") globalForPg.pgPool = pool;
 

@@ -1,5 +1,6 @@
 // DB 스키마 (앱 첫 실행 시 자동 적용, CREATE IF NOT EXISTS라 여러 번 실행해도 안전)
 export const SCHEMA_SQL = `
+CREATE SCHEMA IF NOT EXISTS family_trip;
 CREATE TABLE IF NOT EXISTS days (
   id SERIAL PRIMARY KEY,
   date DATE NOT NULL UNIQUE,

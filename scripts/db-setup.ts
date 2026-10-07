@@ -3,13 +3,14 @@
 //      npm run db:setup -- --reset-itinerary   (일정만 초기값으로 덮어쓰기)
 import { join } from "node:path";
 import { Client } from "pg";
+import { pgConfig } from "../src/lib/pgconfig";
 import { SCHEMA_SQL } from "../src/lib/schema";
 import { SEED_DAYS } from "../src/lib/seed";
 
 process.loadEnvFile?.(join(__dirname, "..", ".env"));
 
 async function main() {
-  const client = new Client({ connectionString: process.env.DATABASE_URL });
+  const client = new Client(pgConfig());
   await client.connect();
   await client.query(SCHEMA_SQL);
 
